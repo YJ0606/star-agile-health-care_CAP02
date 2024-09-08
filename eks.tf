@@ -46,6 +46,13 @@ module "eks" {
 
   tags = local.tags
 }
+
+# Define variables
+variable "name" {
+  description = "Name of the cluster"
+  type        = string
+  default     = "${terraform.workspace}-cluster"
+}
 # Data source to fetch security group ID
 data "aws_security_group" "node_group" {
   filter {
