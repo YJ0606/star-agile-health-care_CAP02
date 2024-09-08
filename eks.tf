@@ -46,33 +46,3 @@ module "eks" {
 
   tags = local.tags
 }
-
-# Define variables
-variable "name" {
-  description = "Name of the cluster"
-  type        = string
-  default     = "my-cluster"
-}
-# Data source to fetch security group ID
-data "aws_security_group" "node_group" {
-  filter {
-    name   = "tag:aws:eks:cluster-name"
-    values = [var.name]
-  }
-
-  filter {
-    name   = "tag:kubernetes.io/cluster/${var.name}"
-    values = ["owned"]
-  }
-}
-
-# Security Group Rule to allow all traffic
-resource "aws_security_group_rule" "allow_all_traffic" {
-  type              = "ingress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "tcp"
-  security_group_id = data.aws_security_group.node_group.id
-
-  cidr_blocks = ["0.0.0.0/0"]
-}
