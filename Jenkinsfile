@@ -5,7 +5,7 @@ pipeline {
     AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
   }
   stages {
-    stage('build project') {
+    stage('build the project') {
       steps {
         git 'https://github.com/lax66/star-agile-health-care_CAP02.git'
         sh 'mvn clean package'
